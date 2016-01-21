@@ -1,0 +1,55 @@
+.seat {
+    display: inline-block;
+    border-radius: 1em;
+    padding: 4px;
+    width: 2em;
+    max-width: 2em;
+    text-align: center;
+    margin-right: 0.3em;
+    box-sizing: border-box;
+    border: 1px solid #666;
+    color: #666;
+}
+
+.seat:hover {
+    background-color: #eee;
+    cursor: pointer;
+    user-select: none;
+}
+
+.seat.selected {
+    background-color: #cfa;
+    border: none;
+    color: #282;
+}
+
+.seat.restricted {
+    border: 3px solid #faa;
+}
+
+.seat.taken {
+    background-color: #eee;
+    color: #bbb;
+    cursor: not-allowed;
+    border-color: #bbb;
+}
+
+.row {
+    margin-bottom: 0.2em;
+}
+
+.row .rowName {
+    color: #888;
+    margin-right: 0.5em;
+}
+
+.block {
+    border: 1px solid #444;
+    display: inline-block;
+    padding: 1em;
+}
+
+.block .blockName {
+    text-align: center;
+    display: block;
+}
