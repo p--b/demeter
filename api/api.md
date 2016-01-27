@@ -20,7 +20,8 @@ API
         },
         "rates": {
             "id": <name>-string,
-        }
+        },
+        "defaultRate_id": "id",
     }
 
 /seatmaps

@@ -6,12 +6,12 @@ class Booking extends Model
 {
     public function customer()
     {
-        return $this->hasOne('Demeter\Customer');
+        return $this->belongsTo('Demeter\Customer');
     }
 
     public function seatSet()
     {
-        return $this->hasOne('Demeter\SeatSet');
+        return $this->belongsTo('Demeter\SeatSet');
     }
 
     public function token()

@@ -82,6 +82,15 @@ class CreateInitialTables extends Migration
             $tbl->foreign('show_id')->references('id')->on('shows');
         });
 
+        Schema::create('show_default_rates', function (Blueprint $tbl) {
+            $tbl->integer('show_id')->unsigned();
+            $tbl->integer('rate_id')->unsigned();
+
+            $tbl->primary(['show_id', 'rate_id']);
+            $tbl->foreign('show_id')->references('id')->on('shows');
+            $tbl->foreign('rate_id')->references('id')->on('rates');
+        });
+
         Schema::create('show_band_rates', function(Blueprint $tbl) {
             $tbl->integer('band_id')->unsigned();
             $tbl->integer('rate_id')->unsigned();
@@ -116,11 +125,11 @@ class CreateInitialTables extends Migration
             $tbl->integer('gross')->unsigned();
             $tbl->boolean('ticketsSent')->default(FALSE);
             $tbl->integer('seat_set_id')->unsigned();
-            $tbl->integer('booking_token_id')->unsigned();
+            $tbl->integer('token_id')->unsigned();
 
             $tbl->foreign('customer_id')->references('id')->on('customers');
             $tbl->foreign('seat_set_id')->references('id')->on('seat_sets');
-            $tbl->foreign('booking_token_id')->references('id')->on('tokens');
+            $tbl->foreign('token_id')->references('id')->on('tokens');
         });
 
         Schema::create('booking_seats', function(Blueprint $tbl) {
@@ -141,7 +150,7 @@ class CreateInitialTables extends Migration
         Schema::create('booking_tokens', function(Blueprint $tbl) {
             $tbl->increments('id');
             $tbl->string('token');
-            $tbl->disposition('string');
+            $tbl->string('disposition');
             $tbl->unique('token');
         });
 
@@ -160,6 +169,8 @@ class CreateInitialTables extends Migration
      */
     public function down()
     {
+        Schema::drop('show_default_rates');
+        Schema::drop('charge_exceptions');
         Schema::drop('booking_tokens');
         Schema::drop('booking_seats');
         Schema::drop('bookings');

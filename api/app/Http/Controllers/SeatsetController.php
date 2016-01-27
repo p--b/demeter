@@ -24,20 +24,23 @@ class SeatsetController extends Controller
 
         $ssData = $ss->jsonSerialize();
         $ssData['seats'] = [];
-        
+
         foreach ($ss->getHeldSeats() as $bookingSeat)
         {
             $seat = $bookingSeat->seat()->first();
             $row  = $seat->blockRow()->first();
+            $perf = $bookingSeat->performance()->first();
 
             $seatData = [
                 'id'         => $seat->id,
+                'performance' => $perf->id,
+                'show'       => $perf->show()->first()->id,
                 'seatNumber' => $seat->seatNum,
                 'rate'       => $bookingSeat->rate_id,
                 'band'       => $seat->band_id,
                 'price'      => $bookingSeat->getPrice(),
-                'row'        => $row->id,
-                'block'      => $row->seatmapBlock()->first()->id,
+                'row'        => $row->name,
+                'block'      => $row->seatmapBlock()->first()->name,
             ];
 
             $ssData['seats'][] = $seatData;

@@ -15,4 +15,9 @@ class Show extends Model
     {
         return $this->hasMany('Demeter\Rate');
     }
+
+    public function defaultRate()
+    {
+        return $this->hasOne('Demeter\ShowDefaultRate');
+    }
 }

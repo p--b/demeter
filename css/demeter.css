@@ -1,0 +1,475 @@
+#demeter .showList article
+{
+    border: 1px solid #555;
+    border-radius: 10px;
+    background-color: #444;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: right;
+    min-height: 15em;
+    padding: 2em;
+}
+
+.plate
+{
+    display: inline-block;
+    border: 1px solid #4cf;
+    padding: 1.5em;
+    border-radius: 10px;
+    background-color: #eff;
+}
+
+.plate h2
+{
+    margin-top: 0;
+}
+
+#demeter .showList article h1
+{
+    border: none;
+}
+
+#demeter .showList a
+{
+    color: white;
+    text-decoration: none;
+}
+
+#demeter .showList a:hover
+{
+    display: block;
+    box-shadow: 0 0 10px #4ac;
+    border-radius: 10px;
+}
+
+#demeter .showList a:hover h1
+{
+    text-decoration: underline;
+}
+
+#demeter .showList h1
+{
+    margin-top: 0;
+    font-size: 3em;
+}
+
+#demeter table
+{
+    padding: 0;
+    margin: 0;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+#demeter th
+{
+    background-color: #eee;
+    margin: 0;
+    padding: 0.5em;
+}
+
+#demeter tr
+{
+    border-bottom: 1px solid #ccc;
+}
+
+#demeter th:first-child
+{
+    border-radius: 6px 0 0 0;
+}
+
+#demeter th:last-child
+{
+    border-radius: 0 6px 0 0;
+}
+
+#demeter td
+{
+    margin: 0;
+    text-align: center;
+}
+
+#demeter .performanceList table td a
+{
+    display: block;
+    padding: 0.5em;
+    font-size: 1.5em;
+}
+
+#demeter .performanceList table td a:hover
+{
+    background-color: #cfc;
+    box-shadow: 0 0 5px #4cf;
+}
+
+#demeter td:first-child
+{
+/*    border-left: 1px solid #ccc;*/
+}
+
+#demeter tr:last-child td:first-child
+{
+    border-radius: 0 0 0 6px;
+}
+
+#demeter tr:last-child td:last-child
+{
+    border-radius: 0 0 6px 0;
+}
+
+#demeter .basket
+{
+    background-color: #eee;
+    border: 1px solid #aaa;
+    border-radius: 5px;
+    float: right;
+    padding: 1.5em;
+    width: 12.5em;
+}
+
+#demeter .basket h1
+{
+    margin: auto 0;
+    color: #888;
+    border-bottom: #aaa 1px solid;
+}
+
+#demeter .basket h2
+{
+    color: #333;
+    font-size: 1.0em;
+}
+
+#demeter .basket .empty
+{
+    font-style: italic;
+    color: #888;
+    margin: 1em auto;
+    display: inline-block;
+}
+
+#demeter button
+{
+    background-color: #8c2;
+    padding: 0.4em 0.3em;
+    border: 1px solid #494;
+    box-shadow: #580 0.2em 0.2em 0;
+    font-size: 1.5em;
+    color: #450;
+    margin-top: 0.5em;
+}
+
+#demeter button:hover
+{
+    background-color: #ad4;
+    cursor: pointer;
+}
+
+#demeter button:active
+{
+    position: relative;
+    left: 0.1em;
+    top: 0.1em;
+    box-shadow: #580 0.1em 0.1em 0;
+}
+
+#demeter button:disabled
+{
+    background-color: #ccc;
+    box-shadow: #999 0.2em 0.2em 0;
+    border-color: #999;
+    color: #666;
+}
+
+#demeter .buttonSet
+{
+    margin-top: -1em;
+}
+
+#demeter .buttonSet button
+{
+    background-color: #eee;
+    color: #444;
+    font-size: 0.9em;
+    box-shadow: #999 0.2em 0.2em 0;
+    border: 1px solid #666;
+}
+
+#demeter .buttonSet button:active
+{
+    position: relative;
+    left: 0.1em;
+    top: 0.1em;
+    box-shadow: #999 0.1em 0.1em 0;
+}
+
+#demeter .buttonSet button.selected
+{
+    background-color: #4ac;
+    color: #fff;
+    border: 1px solid #4ac;
+}
+
+#demeter .basket button
+{
+    width: 100%;
+}
+
+#demeter .basket ul
+{
+    padding-left: 0;
+    max-height: 20em;
+    overflow-y: auto;
+}
+
+#demeter .basket li
+{
+    list-style-type: none;
+    margin-left: 0;
+}
+
+#demeter .basket li::before {
+    content: "▸ ";
+    color: #666;
+}
+
+#demeter .basket span.price
+{
+    float: right;
+}
+
+#demeter .reviewBox
+{
+    width: 90%;
+    box-sizing: border-box;
+}
+
+#demeter .basketshow
+{
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    padding: 2em;
+    margin-bottom: 1em;
+    width: 100%;
+}
+
+#demeter .basketshow h2
+{
+    margin: 0;
+    padding-top: 0;
+    margin-bottom: 0.3em;
+}
+
+#demeter .basketshow h3
+{
+    display: block;
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
+#demeter .basketshow h4
+{
+    margin-bottom: 0.2em;
+    margin-top: 1em;
+}
+
+#demeter .basketshow table
+{
+    width: 100%;
+    border-spacing: 0;
+    border-collapse: collapse;
+    border-top: 1px solid #ccc;
+}
+
+#demeter .basketshow td
+{
+    width: 20%;
+    text-align: left;
+    line-height: 0;
+    padding-left: 1em;
+}
+
+#demeter .baskettotals
+{
+    width: 35%;
+    margin-right: 2em;
+    padding-left: 2em;
+    float: right;
+}
+
+#demeter .baskettotals table
+{
+    width: 100%;
+    border-top: 1px solid #ccc;
+}
+
+#demeter .baskettotals td
+{
+    text-align: left;
+    line-height: 0;
+}
+
+#demeter .baskettotals td:first-child
+{
+    width: 50%;
+    font-weight: bold;
+}
+
+#demeter .baskettotals button
+{
+    width: 100%;
+}
+
+#demeter .boring
+{
+    float: left;
+    color: #666;
+    font-size: 0.9em;
+}
+
+#demeter .complete, #demeter .working
+{
+    width: 60%;
+    padding: 2em;
+    border-radius: 15px;
+    text-align: center;
+    margin: 0 auto;
+    border: 1px solid black;
+}
+
+#demeter .complete
+{
+    background-color: #ce9;
+    border-color: #292;
+}
+
+#demeter .working
+{
+    background-color: #eee;
+    border-color: #4cf;
+}
+
+#demeter .complete h2
+{
+    margin-top: 0;
+    border-bottom: 1px dotted #090;
+}
+
+#demeter .complete .tick::before
+{
+    content: "✓";
+    margin: 0;
+    line-height: 0.5em;
+    font-size: 10em;
+    color: #564;
+}
+
+#demeter .working .spin::before
+{
+    content: "⚙";
+    margin: 0;
+    line-height: 0.5em;
+    font-size: 10em;
+    color: #666;
+}
+
+#demeter .working .spin
+{
+    -webkit-animation:spin 4s ease infinite;
+    -moz-animation:spin 4s ease infinite;
+    animation:spin 4s ease infinite;
+}
+
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+#demeter .complete p:last-child
+{
+    margin-bottom: 0;
+}
+
+#demeter .error
+{
+    background-color: #faa;
+    padding: 1em;
+    border: 1px solid #a55;
+    border-radius: 15px;
+    width: 90%;
+    margin-bottom: 1em;
+    box-sizing: border-box;
+}
+
+#demeter .error h3
+{
+    margin-top: 0;
+}
+
+#demeter .error p
+{
+    margin-bottom: 0;
+}
+
+.seat {
+    display: inline-block;
+    border-radius: 1em;
+    padding: 4px;
+    width: 2em;
+    max-width: 2em;
+    text-align: center;
+    margin-right: 0.2em;
+    box-sizing: border-box;
+    border: 1px solid #666;
+    color: #666;
+}
+
+.seat:hover {
+    background-color: #eee;
+    cursor: pointer;
+    user-select: none;
+}
+
+.seat.restricted {
+    border: 3px solid #faa;
+}
+
+.seat.taken {
+    background-color: #eee;
+    color: #bbb;
+    cursor: not-allowed;
+    border-color: #bbb;
+}
+
+.seat.selected {
+    background-color: #cfa;
+    border: none;
+    color: #282;
+    cursor: pointer;
+}
+
+.row {
+    margin-bottom: 0.1em;
+}
+
+.row .rowName {
+    color: #888;
+    margin-right: 0.5em;
+    width: 1em;
+    display: inline-block;
+}
+
+.blockZone {
+    position: relative;
+}
+
+.block {
+    border: 1px solid #444;
+    display: inline-block;
+    padding: 1em;
+    position: absolute;
+}
+
+.block .blockName {
+    text-align: center;
+    display: block;
+}

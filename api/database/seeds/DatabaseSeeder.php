@@ -11,6 +11,7 @@ use Demeter\Seat;
 use Demeter\Rate;
 use Demeter\ShowBandRate;
 use Demeter\Band;
+use Demeter\ShowDefaultRate;
 
 class DatabaseSeeder extends Seeder
 {
@@ -28,6 +29,8 @@ class DatabaseSeeder extends Seeder
         $s->save();
 
         $rates = [];
+        $first = TRUE;
+        $defaultId = NULL;
         foreach (['Adult', 'Concession', 'VIP'] as $rname)
         {
             $rate = new Rate;
@@ -35,8 +38,19 @@ class DatabaseSeeder extends Seeder
             $rate->show()->associate($s);
             $rate->save();
 
+            if ($first)
+            {
+                $first = FALSE;
+                $defaultId = $rate;
+            }
+
             $rates[$rname] = $rate;
         }
+
+        $defaultRate = new ShowDefaultRate;
+        $defaultRate->show()->associate($s);
+        $defaultRate->rate()->associate($defaultId);
+        $defaultRate->save();
 
         $sm = new Seatmap;
         $sm->save();

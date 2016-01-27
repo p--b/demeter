@@ -74,16 +74,15 @@ class BookingController extends Controller
             $cust->save();
 
             $booking = new Booking;
-            $booking->customer()->associate($cust);
             $booking->name  = $r->input('name');
             $booking->state = BookingState::BOOKED;
-            $booking->seatSet()->associate($seatSet);
             $booking->token()->associate($token);
-            $booking->emailSent = FALSE;
+            $booking->customer()->associate($cust);
+            $booking->seatSet()->associate($seatSet);
 
             $totals = $this->determineCurrentTotals($seatSet);
-            $booking->netValue = $totals['net'];
-            $booking->grossValue = $totals['gross'];
+            $booking->net = $totals['net'];
+            $booking->gross = $totals['gross'];
             $booking->fees = $totals['fee'];
             $booking->save();
 
@@ -99,8 +98,9 @@ class BookingController extends Controller
             // If something went wrong here, we probably had
             // bad/missing data.
             DB::rollback();
-            $token->dispostion = BookingToken::BOOK_FAIL;
+            $token->disposition = BookingToken::BOOK_FAIL;
             $token->save();
+            error_log($e);
             return new Response(NULL, 400);
         }
 
@@ -120,12 +120,13 @@ class BookingController extends Controller
         }
         else
         {
-            DB::transaction(function() use ($booking, $token, $seatSet, $declined)
+            DB::transaction(function() use ($booking, $token, $seatSet, $declined, $e)
             {
                 $booking->state     = BookingState::ABORTED;
                 $token->disposition = $declined ? BookingToken::CHARGED_DECLINED
                                                 : BookingToken::CHARGED_FAIL;
                 $seatSet->ephemeral = TRUE;
+                error_log($e);
                 // TODO: Store charge exception
                 $booking->save();
                 $token->save();
@@ -146,9 +147,10 @@ class BookingController extends Controller
     {
         try
         {
+            $this->configureStripe();
             // TODO: Is this enough info?
             $charge = \Stripe\Charge::create([
-                'amount' => $booking->grossValue,
+                'amount' => $booking->gross,
                 'currency' => 'gbp',
                 'source' => $token->token,
                 'description' => 'Demeter#'.$booking->id,
@@ -167,6 +169,11 @@ class BookingController extends Controller
             $declune   = FALSE;
             return FALSE;
         }
+    }
+
+    protected function configureStripe()
+    {
+        \Stripe\Stripe::setApiKey($_ENV['STRIPE_SKEY']);
     }
 
     protected function determineCurrentTotals($seatSet)

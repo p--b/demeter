@@ -27,6 +27,8 @@ class ShowController extends Controller
         foreach ($rates as $rate)
             $showData['rates'][$rate->id] = $rate->name;
 
+        $showData['defaultRate'] = $show->defaultRate()->first()->rate()->first()->id;
+
         return response()->json($showData);
     }
 
