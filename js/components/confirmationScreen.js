@@ -20,9 +20,8 @@ var Ratepicker = React.createClass({
                 rate: rateId,
             });
             perfTix.save().then(function() { 
-                that.props.basket[0].collection.trigger('change'); 
+                that.props.ticket.collection.fetch();
             });
-            // @FIXME: This doesn't cause a re-render, yet.
         };
 
         for (var rateId in this.props.rates) {
