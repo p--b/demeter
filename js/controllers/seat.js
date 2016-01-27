@@ -176,6 +176,7 @@ module.exports = {
             appState.Viewport);
         };
 
+        basket.on("sync change", function() {totals.fetch();});
         basket.on("sync change", redraw);
         basket.on("sync change", updateShows);
         totals.on("sync change", redraw);
@@ -183,7 +184,6 @@ module.exports = {
         shows.on("add", updateRates);
         maps.on("add", redraw);
         basket.fetch();
-        totals.fetch();
     },
     done: function() {
         if (!appState.token) {

@@ -9,7 +9,6 @@ var fmtCurrency = function(amount)
 
 var Ratepicker = React.createClass({
     render: function() {
-        console.log(this.props);
         var buttons = [];
         var ticketRate = this.props.ticket.get('rate');
         var that = this;
@@ -19,7 +18,7 @@ var Ratepicker = React.createClass({
                 id: this.props.ticket.id,
                 rate: rateId,
             });
-            perfTix.save().then(function() { 
+            perfTix.save().then(function() {
                 that.props.ticket.collection.fetch();
             });
         };
