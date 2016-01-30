@@ -31,16 +31,19 @@ module.exports = {
         var seatmap = null;
         var availability = new Availability({id: performance});
         var defRate = null;
+        var getBasket = function() 
+        {
+            basket.fetch();
+            availability.fetch();
+        };
 
         var onSeatSelected = function(seatData) {
             if (seatData.selected) {
-                basket.get(seatData.id).destroy();
+                basket.get(seatData.id).destroy({success: getBasket});
             } else {
-                basket.create({id: seatData.id, rate: defRate});
+                basket.create({id: seatData.id, rate: defRate},
+                              {success: getBasket});
             }
-
-            basket.fetch();
-            availability.fetch();
         };
 
         availability.fetch();
@@ -180,9 +183,9 @@ module.exports = {
         basket.on("sync change", redraw);
         basket.on("sync change", updateShows);
         totals.on("sync change", redraw);
-        shows.on("add", redraw);
+        shows.on("change", redraw);
         shows.on("add", updateRates);
-        maps.on("add", redraw);
+        maps.on("add change", redraw);
         basket.fetch();
     },
     done: function() {

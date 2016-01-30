@@ -96,7 +96,7 @@ $app->singleton(
 */
 
 $app->group(['namespace' => 'Demeter\Http\Controllers',
-             'prefix'    => '/api/public/'],
+             'prefix'    => $_ENV['URL_ROOT'].'api/public/'],
              function ($app) {
     require __DIR__.'/../app/Http/routes.php';
 });

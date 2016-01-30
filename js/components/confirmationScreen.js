@@ -56,7 +56,16 @@ var PerfTix = React.createClass({
         if (!perf)
             return <p>Loading...</p>;
 
-        var map     = this.props.maps.get(perf.seat_map_id);
+        var map = this.props.maps.get(perf.seat_map_id);
+
+        if (!map) {
+            return <p>Loading...</p>;
+        }
+
+        if (!map.get('bands')) {
+            return <p>Loading...</p>;
+        }
+
         var tixData = this.props.tix.map(function(t) {
             return <tr key={t.id}>
                         <td className="seatRef">{t.get('block')} {t.get('row')}{t.get('seatNumber')}</td>

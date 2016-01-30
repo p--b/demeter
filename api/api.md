@@ -76,9 +76,7 @@ API
 
 /completion
     {
-        "name": string,
         "email": string,
-        "pymtEmail": string,
         "token": string,
         "pymtAddrLine1": string,
         "pymtAddrZip": string,
