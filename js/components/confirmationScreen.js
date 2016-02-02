@@ -147,7 +147,7 @@ var Stripe = React.createClass({
             e.target.innerHTML = "Processing...";
             props.handler.open({
                 name: 'ICU MTSoc Online Ticketing',
-                description: qty + ' Ticket' + (qty == 1) ? '' : 's',
+                description: '' + qty + ' Ticket' + ((qty == 1) ? '' : 's'),
                 zipCode: true,
                 billingAddress: true,
                 currency: "gbp",

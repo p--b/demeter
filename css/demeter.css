@@ -447,6 +447,34 @@
     cursor: pointer;
 }
 
+.seat.loading {
+    background-color: #fd0;
+    -webkit-animation: pulse 0.5s linear infinite;
+	-moz-animation: pulse 0.5s linear infinite;
+	-ms-animation: pulse 0.5s linear infinite;
+	animation: pulse 0.5s linear infinite;
+}
+
+@keyframes "pulse" {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.2; }
+}
+
+@-moz-keyframes pulse {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.2; }
+}
+
+@-webkit-keyframes pulse {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.2; }
+}
+
+@-ms-keyframes pulse {
+ 0% { opacity: 1; }
+ 100% { opacity: 0.2; }
+}
+
 .row {
     margin-bottom: 0.1em;
 }

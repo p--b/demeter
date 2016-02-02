@@ -3,8 +3,14 @@ var React = require('react')
 var Seat = React.createClass({
     render: function() {
         var props = this.props
-        var seatSelect = function() {
-            props.onSeatSel(props)
+        var seatSelect = function(e) {
+            var list = e.target.classList;
+            if (!list.contains('loading')) {
+                if (!list.contains('taken') || list.contains('selected'))
+                    list.add('loading');
+
+                props.onSeatSel(props);
+            }
         }
         var classes = 'seat'
 

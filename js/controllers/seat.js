@@ -113,8 +113,15 @@ module.exports = {
             token: checkoutComplete,
         });
 
+        if ('checkoutError' in appState) {
+            var error = appState.checkoutError;
+            appState.checkoutError = null;
+        } else {
+            var error = null;
+        }
+
         var updateShows = function() {
-            if (!basket.length || basket.models[0].id == null)
+            if (!error && (!basket.length || basket.models[0].id == null))
                 Backbone.history.navigate('', {trigger: true});
 
             var baskByShow = basket.groupBy('show');
@@ -158,13 +165,6 @@ module.exports = {
                 }
             }
         };
-
-        if ('checkoutError' in appState) {
-            var error = appState.checkoutError;
-            appState.checkoutError = null;
-        } else {
-            var error = null;
-        }
 
         var redraw = function()
         {
