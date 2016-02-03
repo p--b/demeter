@@ -1,5 +1,4 @@
 <?php
-require 'src/header.php';
 
 $root    = '';
 $mapping = ['/' => 'home', '/about' => 'about'];
@@ -9,7 +8,7 @@ if (substr($rawUri, 0, strlen($root)) == $root)
 else
     $uri = $rawUri;
 
+require 'src/header.php';
 if (isset($mapping[$uri]))
     require 'content/'.$mapping[$uri].'.php';
-
 require 'src/footer.php';
