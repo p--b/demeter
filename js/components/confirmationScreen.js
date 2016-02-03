@@ -131,7 +131,8 @@ var Totals = React.createClass({
                     <tbody>
                         <tr><td><p>Subtotal:</p></td>
                             <td>{fmtCurrency(this.props.totals.get('net'))}</td></tr>
-                        <tr><td><p>Booking Fees:</p></td>
+                        <tr><td><p title="The booking fee covers costs incurred in taking card payments.">
+                                   Booking Fees:<sup className="tooltip">?</sup></p></td>
                             <td>{fmtCurrency(this.props.totals.get('fee'))}</td></tr>
                         <tr><td><p>Total:</p></td>
                             <td>{fmtCurrency(this.props.totals.get('gross'))}</td></tr>

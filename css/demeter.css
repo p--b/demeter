@@ -522,3 +522,10 @@
     text-align: center;
     display: block;
 }
+
+.tooltip {
+    border-bottom: 1px dotted #999;
+    color: #999;
+    font-size: 0.9em;
+    margin-left: 0.25em;
+}
