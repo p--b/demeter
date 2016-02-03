@@ -76,6 +76,9 @@ class SeatsetController extends Controller
         $rateShow = $rateModel->show()->first();
         $prfShow  = $prfModel->show()->first();
 
+        if ($seatModel->hidden)
+            return new Response(NULL, 400);
+
         if ($prfMap->id != $seatMap->id || $rateShow->id != $prfShow->id)
             return new Response(NULL, 400);
 

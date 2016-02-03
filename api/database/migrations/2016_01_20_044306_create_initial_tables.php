@@ -70,7 +70,8 @@ class CreateInitialTables extends Migration
             $tbl->integer('block_row_id')->unsigned();
             $tbl->integer('seatNum')->nullable();
             $tbl->integer('band_id')->unsigned();
-            $tbl->boolean('restricted');
+            $tbl->boolean('restricted')->default(FALSE);
+            $tbl->boolean('hidden')->default(FALSE);
 
             $tbl->foreign('block_row_id')->references('id')->on('rows');
             $tbl->foreign('band_id')->references('id')->on('bands');

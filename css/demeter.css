@@ -464,6 +464,10 @@
 	animation: pulse 0.5s linear infinite;
 }
 
+.seat.hidden {
+    visibility: hidden;
+}
+
 @keyframes "pulse" {
  0% { opacity: 1; }
  100% { opacity: 0.2; }

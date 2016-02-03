@@ -26,6 +26,10 @@ var Seat = React.createClass({
             classes += ' taken'
         }
 
+        if (this.props.hidden == 1) {
+            classes += ' hidden'
+        }
+
         return <div className={classes}
                     style={this.props.style}
                     onClick={seatSelect}>
