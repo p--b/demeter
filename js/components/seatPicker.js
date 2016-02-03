@@ -1,4 +1,5 @@
 var React = require('react')
+var appState = require('../appState.js');
 
 var Seat = React.createClass({
     render: function() {
@@ -190,6 +191,39 @@ var Block = React.createClass({
     }
 });
 
+var BasketTimeout = React.createClass({
+    calcDiff: function() {
+        var time = new Date(this.props.basket.created);
+        time.setMinutes(time.getMinutes() + appState.config.expiryMins);
+        this.setState({diff: new Date(time - Date.now())});
+    },
+    componentWillMount: function() {
+        this.calcDiff();
+    },
+    componentDidMount: function() {
+        this.setState({interval: window.setInterval(this.calcDiff, 1000)});
+    },
+    componentWillUnmount: function() {
+        window.clearInterval(this.state.interval);
+    },
+    render: function() {
+        var classes = "plate seatsHeld";
+        var diff = this.state.diff;
+
+        if (diff > 0)
+            var diffText = '' + diff.getMinutes() + 'm ' + diff.getSeconds() + 's';
+        else
+            var diffText = '0m 0s';
+
+        if (!diff.getMinutes())
+            classes += ' urgent';
+
+        return <div className={classes}>The selected seats have been held for you.<br />
+                <strong>You have {diffText} to complete your booking before these seats will be released.</strong>
+                </div>;
+    }
+});
+
 var SeatPicker = React.createClass({
     render: function()
     {
@@ -231,7 +265,12 @@ var SeatPicker = React.createClass({
                             top={blk.offset[1]} />);
         }
 
+        var heldTimer = this.props.basket.created ? <BasketTimeout basket={this.props.basket} /> : null;
+
         return <div><h2>Select seats for {this.props.show.get('name')}</h2>
+                    <div className="basketTimeout">
+                        {heldTimer}
+                    </div>
                     <h3>Viewing {this.props.perf.startsAt.toLocaleDateString()} @
                                 {this.props.perf.startsAt.toLocaleTimeString()}</h3>
                     <p>{this.props.show.get('description')}</p>
@@ -252,4 +291,5 @@ var SeatPicker = React.createClass({
 module.exports = {Seat: Seat,
                   Row: Row,
                   Block: Block,
+                  BasketTimeout: BasketTimeout,
                   SeatPicker: SeatPicker};

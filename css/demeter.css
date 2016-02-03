@@ -499,10 +499,30 @@
     display: inline-block;
 }
 
+.seatsHeld {
+    display: block;
+    margin-top: 1em;
+    margin-bottom: 0.5em;
+    width: 90%;
+    width: calc(90% - 3.5em);
+}
+
+.seatmapCnt .seatsHeld {
+    width: 12.5em;
+    float: right;
+    margin-top: 0em;
+    margin-right: 2em;
+}
+
+.seatsHeld.urgent {
+    color: red;
+}
+
 .blockZone {
     position: relative;
     min-height: 55vh;
     z-index: 0;
+    max-width: 90%;
     max-width: calc(100% - 12.5em);
     margin-left: -3.5em;
 }

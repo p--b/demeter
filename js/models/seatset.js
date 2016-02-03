@@ -1,5 +1,6 @@
 var Backbone = require('backbone');
 var appState = require('../appState.js');
+var parseDate = require('../appCommon.js').parseDate;
 
 var SeatData = Backbone.Model.extend({
     urlRoot: function()
@@ -26,6 +27,8 @@ var SeatSet = Backbone.Collection.extend({
     },
     url: appState.config.endpoint + 'seatset',
     parse: function(data) {
+        this.created = data.created_at ? parseDate(data.created_at) : null;
+
         return data.seats;
     },
 });

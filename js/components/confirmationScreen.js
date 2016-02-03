@@ -1,6 +1,7 @@
 var React = require('react')
 var _ = require('underscore');
 var SeatSet = require('../models/seatset.js');
+var BasketTimeout = require('./seatPicker.js').BasketTimeout;
 
 var fmtCurrency = function(amount)
 {
@@ -209,9 +210,15 @@ var Outer = React.createClass({
             var error = null;
         }
 
+        if (this.props.basket.created)
+            var basketTimeout = <BasketTimeout basket={this.props.basket} />;
+        else
+            var basketTimeout = null;
+
         return <div><h1>Review your tickets</h1>
                 <p>{rubric}</p>
                 {error}
+                {basketTimeout}
                 <div className="reviewBox">
                 {showTixList}
                 <p className="boring">{details}</p>

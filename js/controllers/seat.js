@@ -83,7 +83,6 @@ module.exports = {
             seatmap.on('sync change', updateSeats);
             availability.on('sync change', updateSeats);
             basket.on('sync change', updateSeats);
-
             seatmap.fetch();
         });
 
@@ -97,6 +96,11 @@ module.exports = {
         appState.Viewport);
     },
     confirm: function() {
+        var smap = appState.Viewport.getElementsByClassName('seatmapCnt');
+
+        if (smap.length)
+            ReactDOM.unmountComponentAtNode(smap[0]);
+
         var basket = new SeatSet.SeatSet([], {performance: null});
         var totals = new Booking.Totals();
         var shows  = new ShowModel.Shows();
