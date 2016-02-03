@@ -80,11 +80,16 @@ var PerfTix = React.createClass({
         });
 
         return <div>
-                    <h4>{perf.startsAt.toLocaleDateString()} @ {perf.startsAt.toLocaleTimeString()}</h4>
+                    <h4><a href={"#/shows/" + show.id + '/' + perf.id}>
+                        {perf.startsAt.toLocaleDateString()} @ {perf.startsAt.toLocaleTimeString()}
+                    </a></h4>
                     <table>
                     <tbody>{tixData}
                     </tbody>
                     </table>
+                    <a href={"#/shows/" + show.id + '/' + perf.id}>
+                    Change seats for this performance
+                    </a>
                 </div>;
     }
 });

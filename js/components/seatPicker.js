@@ -94,10 +94,8 @@ var Row = React.createClass({
                 if (post > postLongest)
                     postLongest = post;
 
-                if (doingPost) {
+                if (doingPost)
                     postDist = post;
-                    doingPost = false;
-                }
 
                 var test = function(count) {
                     if (count == 1) {
@@ -171,7 +169,7 @@ var Block = React.createClass({
                 row = this.props.rows[rowId]
                     blockRows.push(<Row key={rowId}
                                         name={row.name}
-                                        orphanCheck={true}
+                                        orphanCheck={this.props.orphanCheck}
                                         onSeatSel={this.props.onSeatSel}
                                         seatRotate={seatRotate}
                                         avail={this.props.avail}
@@ -221,6 +219,7 @@ var SeatPicker = React.createClass({
                             mine={mineData}
                             name={blk.name}
                             rows={blk.rows}
+                            orphanCheck={this.props.orphanCheck}
                             onSeatSel={this.props.onSeatSel}
                             rotate={blk.rotation}
                             left={blk.offset[0]}

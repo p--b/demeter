@@ -75,6 +75,7 @@ module.exports = {
                                     availability={availability}
                                     basket={basket}
                                     onSeatSel={onSeatSelected}
+                                    orphanCheck={appState.config.orphanCheck}
                                     seatmap={seatmap} />,
                                 appState.Viewport.getElementsByClassName('seatmapCnt')[0]);
             };
