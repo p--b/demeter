@@ -4,8 +4,8 @@
 
     foreach (['/' => 'Book Tickets', '/about' => 'About &amp; Contact'] as $href => $name)
     {
-        $sel   = $req == $href ? " class='selected'" : '';
-        $menu .= "<menuitem><a href='$href' $sel>$name</a></menuitem>\n";
+        $sel   = $req == $root.$href ? " class='selected'" : '';
+        $menu .= "<menuitem><a href='$root$href' $sel>$name</a></menuitem>\n";
     }
 ?>
 <!DOCTYPE html>
