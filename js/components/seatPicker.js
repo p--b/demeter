@@ -6,10 +6,10 @@ var Seat = React.createClass({
         var seatSelect = function(e) {
             var list = e.target.classList;
             if (!list.contains('loading')) {
-                if (!list.contains('taken') || list.contains('selected'))
-                    list.add('loading');
-
-                props.onSeatSel(props);
+                if (false != props.onSeatSel(props)) {
+                    if (!list.contains('taken') || list.contains('selected'))
+                        list.add('loading');
+                }
             }
         }
         var classes = 'seat'
@@ -36,7 +36,86 @@ var Seat = React.createClass({
 
 var Row = React.createClass({
     render: function() {
-        var style    = {}
+        var style = {}
+        var that = this;
+
+        var selected = function(seatProps) {
+            if (that.props.orphanCheck && !seatProps.selected) {
+                var pre = 0;
+                var preLongest = 0;
+                var post = 0;
+                var postLongest = 0;
+                var postDist = 0;
+                var doingPre = true;
+                var doingPost = false;
+
+                var orphan = function() {
+                    window.alert("You may not leave an isolated seat unoccupied in a row!" +
+                        " Please choose a seat next to your existing selection.");
+                };
+
+                var avail = function(id) {
+                    return !(id in that.props.avail && that.props.avail[id]);
+                };
+
+                for (var seatId in that.props.seats) {
+                    if (doingPre) {
+                        if (seatProps.id == seatId) {
+                            doingPre = false;
+                            doingPost = true;
+
+                            if (pre > preLongest)
+                                preLongest = pre;
+                        } else if (avail(seatId)) {
+                            pre++;
+                        } else {
+                            if (pre > preLongest)
+                                preLongest = pre;
+
+                            pre = 0;
+                        }
+                    } else {
+                        if (avail(seatId)) {
+                            post++;
+                        } else {
+                            if (post > postLongest)
+                                postLongest = post;
+
+                            if (doingPost) {
+                                postDist = post;
+                                doingPost = false;
+                            }
+
+                            post = 0;
+                        }
+                    }
+                }
+
+                if (post > postLongest)
+                    postLongest = post;
+
+                if (doingPost) {
+                    postDist = post;
+                    doingPost = false;
+                }
+
+                var test = function(count) {
+                    if (count == 1) {
+                        if (preLongest > count || postLongest > count) {
+                            orphan();
+                            return true;
+                        }
+                    }
+
+                    return false;
+                };
+
+                if (test(pre) || test(postDist))
+                    return false;
+            }
+
+            that.props.onSeatSel(seatProps);
+        };
 
         if (this.props.seatRotate) {
             style.transform = 'rotate(' + this.props.seatRotate + 'deg)';
@@ -51,7 +130,7 @@ var Row = React.createClass({
 
             seat = this.props.seats[seatId];
             rowSeats.push(<Seat key={seatId}
-                         onSeatSel={this.props.onSeatSel}
+                         onSeatSel={selected}
                          style={style}
                          id={seatId}
                          number={seat.seatNum}
@@ -74,13 +153,11 @@ var Block = React.createClass({
         var seatRotate = false
 
         if (this.props.left) {
-            style.left = this.props.left + 'vw';
-            style.position = 'absolute'
+            style.left = this.props.left + 'em';
         }
 
         if (this.props.top) {
-            style.top = this.props.top + 'vh';
-            style.position = 'absolute'
+            style.top = this.props.top + 'em';
         }
 
         if (this.props.rotate) {
@@ -94,6 +171,7 @@ var Block = React.createClass({
                 row = this.props.rows[rowId]
                     blockRows.push(<Row key={rowId}
                                         name={row.name}
+                                        orphanCheck={true}
                                         onSeatSel={this.props.onSeatSel}
                                         seatRotate={seatRotate}
                                         avail={this.props.avail}
@@ -151,9 +229,15 @@ var SeatPicker = React.createClass({
 
         return <div><h2>Select seats for {this.props.show.get('name')}</h2>
                     <h3>Viewing {this.props.perf.startsAt.toLocaleDateString()} @
-                        {this.props.perf.startsAt.getHours()}
-                        {this.props.perf.startsAt.getMinutes()}
-                    </h3>
+                                {this.props.perf.startsAt.toLocaleTimeString()}</h3>
+                    <p>{this.props.show.get('description')}</p>
+                    <p>{this.props.perf.description}</p>
+                    <div className="key">
+                        Key:
+                        <div className="seat selected">1</div> Seat in basket
+                        <div className="seat taken">1</div> Seat unavailable
+                        <div className="seat restricted">1</div> Restricted view
+                    </div>
                     <div className="blockZone">
                     {blocks}
                     </div>

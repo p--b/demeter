@@ -86,6 +86,7 @@ module.exports = React.createClass({
                 <h2>{this.props.show.get('name')}</h2>
                 <h3>{this.props.show.get('fullName')}</h3>
                 <h4>{this.props.show.get('venue')}</h4>
+                <p>{this.props.show.get('description')}</p>
             </div>
             <p>Please select a performance:</p>
             <table>

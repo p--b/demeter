@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $s->name = 'oklahoma';
         $s->fullName = 'ICU MTSoc Presents: Oklahoma!';
         $s->venue = 'Hammersmith Apollo';
+        $s->description = 'Ermagerd this show is 5* go see it!';
         $s->save();
 
         $rates = [];
@@ -64,6 +65,7 @@ class DatabaseSeeder extends Seeder
             $p->show()->associate($s);
             $p->seatMap()->associate($sm);
             $p->startsAt = clone $dt;
+            $p->description = "Doors open 15 minutes before the performance starts.";
             $p->save();
             $dt->add(new \DateInterval("P1D"));
         }
@@ -79,13 +81,16 @@ class DatabaseSeeder extends Seeder
             $bands[$name] = $bnd;
         }
 
-        foreach (['stalls', 'circle'] as $name)
+        $offset = 0;
+
+        foreach (['Stalls', 'Circle'] as $name)
         {
             $blk = new SeatmapBlock;
             $blk->seatmap()->associate($sm);
             $blk->name = $name;
-            $blk->xOffset = 4;
-            $blk->yOffset = 7;
+            $blk->xOffset = $offset;
+            $offset += 30;
+            $blk->yOffset = 0;
             $blk->rotation = 0;
             $blk->save();
 

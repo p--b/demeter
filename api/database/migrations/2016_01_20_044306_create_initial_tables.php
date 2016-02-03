@@ -17,6 +17,7 @@ class CreateInitialTables extends Migration
             $table->string('name');
             $table->string('fullName');
             $table->string('venue');
+            $table->string('description');
         });
 
         Schema::create('seatmaps', function(Blueprint $tbl) {
@@ -38,6 +39,7 @@ class CreateInitialTables extends Migration
             $table->dateTime('startsAt');
             $table->integer('seat_map_id')->unsigned();
             $table->boolean('available')->default(TRUE);
+            $table->string('description');
 
             $table->foreign('show_id')->references('id')->on('shows');
             $table->foreign('seat_map_id')->references('id')->on('seatmaps');

@@ -31,7 +31,7 @@ module.exports = {
         var seatmap = null;
         var availability = new Availability({id: performance});
         var defRate = null;
-        var getBasket = function() 
+        var getBasket = function()
         {
             basket.fetch();
             availability.fetch();
