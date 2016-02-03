@@ -116,6 +116,13 @@ class CreateInitialTables extends Migration
             $tbl->boolean('ephemeral')->default(TRUE);
         });
 
+        Schema::create('booking_tokens', function(Blueprint $tbl) {
+            $tbl->increments('id');
+            $tbl->string('token');
+            $tbl->string('disposition');
+            $tbl->unique('token');
+        });
+
         Schema::create('bookings', function(Blueprint $tbl) {
             $tbl->increments('id');
             $tbl->integer('customer_id')->unsigned();
@@ -131,7 +138,7 @@ class CreateInitialTables extends Migration
 
             $tbl->foreign('customer_id')->references('id')->on('customers');
             $tbl->foreign('seat_set_id')->references('id')->on('seat_sets');
-            $tbl->foreign('token_id')->references('id')->on('tokens');
+            $tbl->foreign('token_id')->references('id')->on('booking_tokens');
         });
 
         Schema::create('booking_seats', function(Blueprint $tbl) {
@@ -147,13 +154,6 @@ class CreateInitialTables extends Migration
             $tbl->foreign('performance_id')->references('id')->on('performances');
             $tbl->foreign('rate_id')->references('id')->on('rates');
             $tbl->unique(['seat_held', 'seat_id', 'performance_id']);
-        });
-
-        Schema::create('booking_tokens', function(Blueprint $tbl) {
-            $tbl->increments('id');
-            $tbl->string('token');
-            $tbl->string('disposition');
-            $tbl->unique('token');
         });
 
         // TODO: Model for this
