@@ -200,9 +200,12 @@ class BookingController extends Controller
 
     protected function determineFee($net)
     {
-        if ($net)
-            return 40;
+        if (!$net)
+            return 0;
 
-        return 0;
+        $const = 20;
+        $rate  = 0.014;
+
+        return ceil(($const + $net * $rate) / (1 - $rate));
     }
 }
