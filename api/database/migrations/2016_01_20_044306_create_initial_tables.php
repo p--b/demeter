@@ -172,14 +172,14 @@ class CreateInitialTables extends Migration
      */
     public function down()
     {
-        Schema::drop('show_default_rates');
         Schema::drop('charge_exceptions');
-        Schema::drop('booking_tokens');
         Schema::drop('booking_seats');
         Schema::drop('bookings');
+        Schema::drop('booking_tokens');
         Schema::drop('seat_sets');
         Schema::drop('customers');
         Schema::drop('show_band_rates');
+        Schema::drop('show_default_rates');
         Schema::drop('rates');
         Schema::drop('seats');
         Schema::drop('rows');
