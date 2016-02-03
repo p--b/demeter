@@ -137,6 +137,7 @@ var Row = React.createClass({
                          id={seatId}
                          number={seat.seatNum}
                          restricted={seat.restricted}
+                         hidden={seat.hidden}
                          taken={seatId in this.props.avail}
                          selected={seatId in this.props.mine} />);
         }
