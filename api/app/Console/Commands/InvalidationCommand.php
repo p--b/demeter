@@ -41,6 +41,6 @@ class InvalidationCommand extends Command {
                             ->update(['seat_held' => NULL]);
 
             $this->info("Released $released seats.");
-        });        
+        });
     }
 }

@@ -240,7 +240,7 @@ var SeatPicker = React.createClass({
         var perf     = this.props.perf;
         this.props.basket.each(function(seat) {
             if (seat.get('performance') == perf.id)
-                mineData[seat.id] = true;
+                mineData[seat.attributes.id] = true;
         });
 
         for (var i = 0; i < takenArray.length; i++)

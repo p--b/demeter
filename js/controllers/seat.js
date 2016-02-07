@@ -38,11 +38,14 @@ module.exports = {
         };
 
         var onSeatSelected = function(seatData) {
+            console.log(seatData);
             if (seatData.selected) {
-                basket.get(seatData.id).destroy({success: getBasket});
+                var model = basket.get(performance + ':' + seatData.id);
+                model.sync('delete', model, {success: getBasket});
             } else {
                 basket.create({id: seatData.id, rate: defRate},
-                              {success: getBasket});
+                              {success: getBasket,
+                               type: 'put'});
             }
         };
 

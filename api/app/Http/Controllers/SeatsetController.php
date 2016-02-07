@@ -160,6 +160,8 @@ class SeatsetController extends Controller
         {
             if ($create)
             {
+                $ss->annulled = FALSE;
+                $ss->ephemeral = TRUE;
                 $ss->save();
                 $_SESSION['ssid'] = $ss->id;
             }

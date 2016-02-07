@@ -3,9 +3,15 @@ var appState = require('../appState.js');
 var parseDate = require('../appCommon.js').parseDate;
 
 var SeatData = Backbone.Model.extend({
+    idAttribute: "__nonexistent__",
     urlRoot: function()
     {
-        return this.collection.url + '/' + this.collection.performance;
+        return this.collection.url + '/' +
+               this.collection.performance + '/' +
+               this.attributes.id;
+    },
+    defaults: {
+        id: '__invalid__',
     },
 });
 
@@ -31,6 +37,9 @@ var SeatSet = Backbone.Collection.extend({
 
         return data.seats;
     },
+    modelId: function(attrs) {
+        return attrs.performance + ':' + attrs.id;
+    }
 });
 
 module.exports = {

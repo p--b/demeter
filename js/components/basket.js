@@ -25,17 +25,15 @@ module.exports = React.createClass({
                 {pdate.toLocaleDateString()} @ {pdate.toLocaleTimeString()}
                 </h2>;
             } else {
-                console.log(this.props.performances);
-                console.log(perfId);
                 var perfInfo = <h2>For another show:</h2>;
             }
 
             perfTix = contentsByPerf[perfId].map(function(item)
             {
-                if (!item.id)
+                if (!item.attributes.id)
                     return null;
 
-                return <li key={item.id}>
+                return <li key={item.attributes.id + '-' + item.get('performance')}>
                     <span className="seatName">{item.get('block')} {item.get('row')}{item.get('seatNumber')}</span>
                 </li>;
             }).filter(function(v) { return v != null; });
