@@ -76,6 +76,9 @@ class SeatsetController extends Controller
         $rateShow = $rateModel->show()->first();
         $prfShow  = $prfModel->show()->first();
 
+        if (!$ss->ephemeral || $ss->annulled)
+            return new Response(NULL, 403);
+
         if ($seatModel->hidden)
             return new Response(NULL, 400);
 
@@ -125,6 +128,9 @@ class SeatsetController extends Controller
     public function removeSeat($performance, $seat)
     {
         $ss = $this->getSS();
+        if (!$ss->ephemeral || $ss->annulled)
+            return new Response(NULL, 403);
+
         BookingSeat::where('seat_set_id', $ss->id)
             ->where('performance_id', $performance)
             ->where('seat_id', $seat)
