@@ -16,7 +16,7 @@ var Ratepicker = React.createClass({
         var selRate = function(rateId) {
             var perfTix = new SeatSet.Seat({
                 performance: this.props.ticket.get('performance'),
-                id: this.props.ticket.id,
+                id: this.props.ticket.attributes.id,
                 rate: rateId,
             });
             perfTix.save().then(function() {
@@ -68,7 +68,7 @@ var PerfTix = React.createClass({
         }
 
         var tixData = this.props.tix.map(function(t) {
-            return <tr key={t.id}>
+            return <tr key={t.attributes.id}>
                         <td className="seatRef">{t.get('block')} {t.get('row')}{t.get('seatNumber')}</td>
                         <td className="band">
                             <Bandviewer ticket={t} bands={map.get('bands')} />

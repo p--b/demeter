@@ -38,7 +38,6 @@ module.exports = {
         };
 
         var onSeatSelected = function(seatData) {
-            console.log(seatData);
             if (seatData.selected) {
                 var model = basket.get(performance + ':' + seatData.id);
                 model.sync('delete', model, {success: getBasket});
@@ -129,7 +128,7 @@ module.exports = {
         }
 
         var updateShows = function() {
-            if (!error && (!basket.length || basket.models[0].id == null))
+            if (!error && (!basket.length || basket.models[0].attributes.id == null))
                 Backbone.history.navigate('', {trigger: true});
 
             var baskByShow = basket.groupBy('show');
