@@ -8,7 +8,12 @@
         "php": ">=5.5.9",
         "laravel/lumen-framework": "5.2.*",
         "vlucas/phpdotenv": "~2.2",
-        "stripe/stripe-php": "3.*"
+        "stripe/stripe-php": "3.*",
+        "swiftmailer/swiftmailer": "^5.4",
+        "zendframework/zend-barcode": ">=2.0.0,<2.4",
+        "zendframework/zend-validator": ">=2.0.0,<2.4",
+        "imagine/Imagine": ">=0.2.0,<0.6.0",
+        "psliwa/php-pdf": "^1.2"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

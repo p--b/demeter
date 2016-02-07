@@ -8,4 +8,12 @@ class Customer extends Model
     {
         return $this->hasMany('Demeter\Booking');
     }
+
+    public function getAddress()
+    {
+        return [$this->addrLine,
+                $this->addrCity,
+                $this->addrPostcode,
+                $this->addrCountry];
+    }
 }

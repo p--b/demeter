@@ -70,7 +70,13 @@ class BookingController extends Controller
         try
         {
             $cust = new Customer;
-            $cust->email = $r->input('email');
+            foreach (['email' => 'email',
+                      'pymtAddrLine1' => 'addrLine',
+                      'pymtAddrCity' => 'addrCity',
+                      'pymtAddrZip' => 'addrPostcode',
+                      'pymtAddrCountry' => 'addrCountry'] as $input => $field)
+                $cust->$field = $r->input($input);
+
             $cust->save();
 
             $booking = new Booking;
@@ -87,6 +93,7 @@ class BookingController extends Controller
             $booking->save();
 
             $seatSet->ephemeral = FALSE;
+            $seatSet->freezePrices();
             $seatSet->save();
 
             $token->disposition = BookingToken::READY;

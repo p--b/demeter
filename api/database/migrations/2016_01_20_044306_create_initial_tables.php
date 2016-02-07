@@ -108,6 +108,10 @@ class CreateInitialTables extends Migration
             $tbl->increments('id');
             $tbl->timestamps();
             $tbl->string('email');
+            $tbl->string('addrLine');
+            $tbl->string('addrCity');
+            $tbl->string('addrPostcode');
+            $tbl->string('addrCountry');
         });
 
         Schema::create('seat_sets', function(Blueprint $tbl) {
@@ -148,6 +152,7 @@ class CreateInitialTables extends Migration
             $tbl->integer('seat_id')->unsigned();
             $tbl->integer('performance_id')->unsigned();
             $tbl->integer('rate_id')->unsigned();
+            $tbl->integer('pricePaid')->unsigned()->default(0);
 
             $tbl->primary(['seat_set_id', 'seat_id', 'performance_id']);
             $tbl->foreign('seat_set_id')->references('id')->on('seat_sets');
