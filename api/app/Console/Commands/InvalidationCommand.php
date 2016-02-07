@@ -38,7 +38,7 @@ class InvalidationCommand extends Command {
 
             $released = DB::table('booking_seats')
                             ->whereIn('seat_set_id', $expired)
-                            ->update(['seat_held' => 0]);
+                            ->update(['seat_held' => NULL]);
 
             $this->info("Released $released seats.");
         });        
