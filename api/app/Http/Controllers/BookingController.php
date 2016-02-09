@@ -155,12 +155,12 @@ class BookingController extends Controller
         try
         {
             $this->configureStripe();
-            // TODO: Is this enough info?
             $charge = \Stripe\Charge::create([
-                'amount' => $booking->gross,
-                'currency' => 'gbp',
-                'source' => $token->token,
-                'description' => 'Demeter#'.$booking->id,
+                'amount'               => $booking->gross,
+                'currency'             => 'gbp',
+                'source'               => $token->token,
+                'description'          => 'Booking ID #'.$booking->id,
+                'statement_descriptor' => 'ICU Online Tickets',
             ]);
             return TRUE;
         }
@@ -173,7 +173,7 @@ class BookingController extends Controller
         catch (\Exception $e)
         {
             $exception = $e;
-            $declune   = FALSE;
+            $decline   = FALSE;
             return FALSE;
         }
     }
@@ -212,7 +212,11 @@ class BookingController extends Controller
 
         $const = 20;
         $rate  = 0.014;
+        $tax   = 0.2;
 
-        return ceil(($const + $net * $rate) / (1 - $rate));
+        $shouldCharge = (($net * (1 - $tax) + $const) /
+                         (1 - $tax - $rate)           ) - $net;
+
+        return ceil($shouldCharge);
     }
 }
