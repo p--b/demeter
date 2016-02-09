@@ -1,6 +1,7 @@
 <div id="demeter">
     <h1>Welcome to the MTSoc Online Box Office</h1>
     <h4>Buy tickets for shows quickly, easily, and securely.</h4>
+    <p>Loading...</p>
 </div>
 <script src="https://checkout.stripe.com/checkout.js"></script>
 <script src="js/bundle.js"></script>

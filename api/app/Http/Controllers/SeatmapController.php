@@ -32,8 +32,9 @@ class SeatmapController extends Controller
             {
                 $rData = &$bData['rows'][$row->id];
                 $rData = [
-                    'name'  => $row->name,
-                    'seats' => [],
+                    'name'      => $row->name,
+                    'leftAlign' => $row->leftAlign,
+                    'seats'     => [],
                 ];
 
                 foreach ($row->seats()->get() as $seat)

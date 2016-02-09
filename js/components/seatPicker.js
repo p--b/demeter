@@ -1,5 +1,6 @@
-var React = require('react')
-var appState = require('../appState.js');
+var React     = require('react')
+var appState  = require('../appState.js');
+var appCommon = require('../appCommon.js');
 
 var Seat = React.createClass({
     render: function() {
@@ -124,6 +125,11 @@ var Row = React.createClass({
             style.transform = 'rotate(' + this.props.seatRotate + 'deg)';
         }
 
+        var rowClass = 'row';
+
+        if (this.props.leftAlign == false)
+            rowClass += ' right';
+
         var rowSeats = [];
 
         for (var seatId in this.props.seats)
@@ -143,7 +149,7 @@ var Row = React.createClass({
                          selected={seatId in this.props.mine} />);
         }
 
-        return <div className="row">
+        return <div className={rowClass}>
         <span className="rowName">{this.props.name}</span>
         {rowSeats}
         </div>
@@ -165,29 +171,29 @@ var Block = React.createClass({
         }
 
         if (this.props.rotate) {
-            style.transform = 'rotate(' + this.props.rotate + 'deg)'
-
-            seatRotate = '-' + this.props.rotate
+            style.transform = 'rotate(' + this.props.rotate + 'deg)';
+            seatRotate      = -this.props.rotate;
         }
 
         for (var rowId in this.props.rows) {
             if (this.props.rows.hasOwnProperty(rowId)) {
-                row = this.props.rows[rowId]
-                    blockRows.push(<Row key={rowId}
-                                        name={row.name}
-                                        orphanCheck={this.props.orphanCheck}
-                                        onSeatSel={this.props.onSeatSel}
-                                        seatRotate={seatRotate}
-                                        avail={this.props.avail}
-                                        mine={this.props.mine}
-                                        seats={row.seats} />)
+                row = this.props.rows[rowId];
+                blockRows.push(<Row key={rowId}
+                                    name={row.name}
+                                    leftAlign={row.leftAlign}
+                                    orphanCheck={this.props.orphanCheck}
+                                    onSeatSel={this.props.onSeatSel}
+                                    seatRotate={seatRotate}
+                                    avail={this.props.avail}
+                                    mine={this.props.mine}
+                                    seats={row.seats} />);
             }
         }
 
         return <div className="block" style={style}>
             <span className="blockName">{this.props.name}</span>
             {blockRows}
-        </div>
+        </div>;
     }
 });
 
@@ -271,8 +277,9 @@ var SeatPicker = React.createClass({
                     <div className="basketTimeout">
                         {heldTimer}
                     </div>
-                    <h3>Viewing {this.props.perf.startsAt.toLocaleDateString()} @
-                                {this.props.perf.startsAt.toLocaleTimeString()}</h3>
+                    <h3>Viewing {this.props.perf.startsAt.toLocaleDateString()}
+                        &nbsp;@&nbsp;{appCommon.formatTime(this.props.perf.startsAt)}
+                    </h3>
                     <p>{this.props.show.get('description')}</p>
                     <p>{this.props.perf.description}</p>
                     <div className="key">

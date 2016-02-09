@@ -20,6 +20,7 @@ module.exports = React.createClass({
         return <div>
             <h1>Welcome to the MTSoc Online Box Office</h1>
             <h4>Buy tickets for shows quickly, easily, and securely.</h4>
+            <h3>Select a show to book tickets:</h3>
             <div className="showList">
                 {shows}
             </div>

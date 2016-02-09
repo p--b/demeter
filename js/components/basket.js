@@ -1,5 +1,6 @@
-var React = require('react');
-var Backbone = require('backbone');
+var React     = require('react');
+var Backbone  = require('backbone');
+var appCommon = require('../appCommon.js');
 
 module.exports = React.createClass({
     render: function() {
@@ -22,7 +23,8 @@ module.exports = React.createClass({
                 var perf = this.props.performances[perfId];
                 var pdate = perf.startsAt;
                 var perfInfo = <h2>
-                {pdate.toLocaleDateString()} @ {pdate.toLocaleTimeString()}
+                {pdate.toLocaleDateString()}
+                &nbsp;@&nbsp;{appCommon.formatTime(pdate)}
                 </h2>;
             } else {
                 var perfInfo = <h2>For another show:</h2>;
@@ -45,8 +47,7 @@ module.exports = React.createClass({
         if (!ticketList.length)
             ticketList = null;
 
-        var checkout = function()
-        {
+        var checkout = function() {
             Backbone.history.navigate('/confirm', {trigger: true});
         };
 

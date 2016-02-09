@@ -1,4 +1,5 @@
 var React = require('react');
+var appCommon = require('../appCommon.js');
 
 module.exports = React.createClass({
     render: function() {
@@ -46,17 +47,9 @@ module.exports = React.createClass({
         maxRows = Math.max(rows, maxRows);
 
         var showId = this.props.show.id;
-        var pad = function(num) {
-            var s = String(num);
-            if (s.length == 1)
-                s = "0" + s;
-
-            return s;
-        };
-
-        var link = function(perf) {
+        var link   = function(perf) {
             return <a href={'#/shows/' + showId + '/' + perf.id}>
-                        {pad(perf.startsAt.getHours())}{pad(perf.startsAt.getMinutes())}
+                        {appCommon.formatTime(perf.startsAt)}
                     </a>
         }
 

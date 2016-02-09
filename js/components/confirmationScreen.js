@@ -1,7 +1,8 @@
-var React = require('react')
-var _ = require('underscore');
-var SeatSet = require('../models/seatset.js');
+var React         = require('react')
+var _             = require('underscore');
+var SeatSet       = require('../models/seatset.js');
 var BasketTimeout = require('./seatPicker.js').BasketTimeout;
+var appCommon     = require('../appCommon.js');
 
 var fmtCurrency = function(amount)
 {
@@ -82,7 +83,8 @@ var PerfTix = React.createClass({
 
         return <div>
                     <h4><a href={"#/shows/" + show.id + '/' + perf.id}>
-                        {perf.startsAt.toLocaleDateString()} @ {perf.startsAt.toLocaleTimeString()}
+                        {perf.startsAt.toLocaleDateString()}
+                        &nbsp;@&nbsp;{appCommon.formatTime(perf.startsAt)}
                     </a></h4>
                     <table>
                     <tbody>{tixData}
