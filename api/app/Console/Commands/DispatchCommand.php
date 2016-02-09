@@ -147,6 +147,7 @@ EOF;
             <h1>$show->fullName</h1>
             <h2>$show->venue</h2>
             <h3>$perf->startsAt</h3>
+            <p class="note">$perf->ticketNote</p>
             <div class="seatData">
                 <span class="block"> {$seatRef['block']} </span>
                 <span class="seat">{$seatRef['row']}{$seatRef['num']}</span>
@@ -167,13 +168,20 @@ EOF;
             $receiptRows[] = '<td class="wide">'.implode('</td><td>', $tix).'</td>';
 
         $receiptRowStr = '<tr>'.implode('</tr><tr>', $receiptRows).'</tr>';
-        $tixpageStr = implode($tixPages);
-        $custAddr = implode('<br />', $customer->getAddress());
+        $tixpageStr    = implode($tixPages);
+        $custAddr      = implode('<br />', $customer->getAddress());
+        $storage       = storage_path();
         return <<<EOF
 <pdf>
     <dynamic-page>
         <placeholders>
-            <footer><div class="pages">Receipt page <page-info format="%s / %s"/></div></footer>
+            <footer><div class="pages">
+                Receipt page <page-info format="%s / %s"/><br />
+                <div class="images">
+                    <img src="$storage/url.png" class="url" />
+                    <img src="$storage/icu.png" class="icu" />
+                </div>
+            </div></footer>
         </placeholders>
         <h1>MTSoc Online Ticketing System</h1>
         <h2>Receipt</h2>
@@ -209,12 +217,17 @@ EOF;
 
     protected function getTixSheet()
     {
+        $bgImage = storage_path('mtsoc.png');
         return <<<EOF
 <stylesheet>
     <dynamic-page font-type="DejaVuSans">
     </dynamic-page>
-    <div class="pages" height="25px">
-        <complex-attribute name="border" color="black" size="1px" style="solid" type="bottom" />
+    <div class="pages" height="50px">
+        <div class="images">
+            <img class="url" margin-top="20px" />
+            <img class="icu" float="right" margin-top="-55px" margin-bottom="10px" />
+        </div>
+        <complex-attribute name="border" color="black" size="1px" style="solid" type="top" />
     </div>
     <page font-type="DejaVuSans">
     </page>
@@ -223,6 +236,14 @@ EOF;
     </h2>
     <div class="ticket" padding="10px" position="relative">
         <complex-attribute name="border" color="black" size="1px" style="solid" />
+        <complex-attribute name="background"
+            image="$bgImage"
+            image-width="250px"
+            image-height="250px"
+            position-x="center"
+            position-y="10px" />
+        <p class="note" margin-top="-10px" font-style="bold" font-size="10pt">
+        </p>
     </div>
     <div class="seatData" font-size="30pt" float="right">
         <span class="block" background.color="black" color="white">

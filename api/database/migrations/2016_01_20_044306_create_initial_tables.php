@@ -40,6 +40,7 @@ class CreateInitialTables extends Migration
             $table->integer('seat_map_id')->unsigned();
             $table->boolean('available')->default(TRUE);
             $table->string('description');
+            $table->string('ticketNote');
 
             $table->foreign('show_id')->references('id')->on('shows');
             $table->foreign('seat_map_id')->references('id')->on('seatmaps');
@@ -61,6 +62,7 @@ class CreateInitialTables extends Migration
             $tbl->integer('seatmap_block_id')->unsigned();
             $tbl->string('name');
             $tbl->integer('rank')->default(0);
+            $tbl->boolean('leftAlign')->default(TRUE);
 
             $tbl->foreign('seatmap_block_id')->references('id')->on('blocks');
         });
