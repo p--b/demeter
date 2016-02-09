@@ -134,7 +134,8 @@ EOF;
 
             $barcode   = $this->calcBarcode($booking, $seat, $seatRef, $perf, $show);
             $datetime  = date('Y-m-d H:i:s');
-            $tixData[] = [$show->fullName.'<br />'.$perf->startsAt,
+            $startTime = (new \DateTime($perf->startsAt))->format('Y-m-d G:i');
+            $tixData[] = [$show->fullName.'<br />'.$startTime,
                           "{$seatRef['block']} {$seatRef['row']}{$seatRef['num']}",
                           $smSeat->band()->first()->name,
                           $rate,
@@ -146,7 +147,7 @@ EOF;
     <div class="ticket">
             <h1>$show->fullName</h1>
             <h2>$show->venue</h2>
-            <h3>$perf->startsAt</h3>
+            <h3>$startTime</h3>
             <p class="note">$perf->ticketNote</p>
             <div class="seatData">
                 <span class="block"> {$seatRef['block']} </span>
