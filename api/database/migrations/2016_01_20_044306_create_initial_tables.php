@@ -17,7 +17,7 @@ class CreateInitialTables extends Migration
             $table->string('name');
             $table->string('fullName');
             $table->string('venue');
-            $table->string('description');
+            $table->text('description');
         });
 
         Schema::create('seatmaps', function(Blueprint $tbl) {
@@ -39,7 +39,7 @@ class CreateInitialTables extends Migration
             $table->dateTime('startsAt');
             $table->integer('seat_map_id')->unsigned();
             $table->boolean('available')->default(TRUE);
-            $table->string('description');
+            $table->text('description');
             $table->string('ticketNote');
 
             $table->foreign('show_id')->references('id')->on('shows');
@@ -167,7 +167,7 @@ class CreateInitialTables extends Migration
         // TODO: Model for this
         Schema::create("charge_exceptions", function(Blueprint $tbl) {
             $tbl->integer('booking_token_id')->unsigned();
-            $tbl->string('exception');
+            $tbl->text('exception');
             $tbl->foreign('booking_token_id')->references('id')->on('booking_tokens');
         });
     }
