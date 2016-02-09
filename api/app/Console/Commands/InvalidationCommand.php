@@ -9,8 +9,28 @@ use DB;
 class InvalidationCommand extends Command {
     protected $name = 'demeter:invalidate';
     protected $description = "Invalidates expired ephemeral seat-sets.";
+    protected $signature = 'demeter:invalidate {--c|camp}';
 
     public function fire()
+    {
+        if ($this->option('camp'))
+        {
+            $this->info("Camping for 1 minute; will snipe every 10 seconds.");
+
+            $this->doExpiry();
+            for ($i = 0; $i < 5; $i++)
+            {
+                sleep(10);
+                $this->doExpiry();
+            }
+        }
+        else
+        {
+            $this->doExpiry();
+        }
+    }
+
+    public function doExpiry()
     {
         $db = $_ENV['DB_CONNECTION'];
         $expiryMins = $_ENV['EXPIRY_MINS'];
