@@ -19,9 +19,9 @@ class SeatSet extends Model
         return $this->seats()->where('seat_held', 1)->get();
     }
 
-    public function freezePrices()
+    public function freezePrices($comp)
     {
         foreach ($this->getHeldSeats() as $seat)
-            $seat->freezePrice($this);
+            $seat->freezePrice($this, $comp);
     }
 }

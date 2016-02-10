@@ -238,6 +238,7 @@ module.exports = {
                 name: token.card.name,
                 email: token.email,
                 token: token.id,
+                source: 'stripe',
                 pymtAddrLine1: token.card.address_line1,
                 pymtAddrZip: token.card.address_zip,
                 pymtAddrState: token.card.address_state,

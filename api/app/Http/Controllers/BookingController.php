@@ -16,25 +16,36 @@ class BookingController extends Controller
     public function complete(Request $r)
     {
         if (!($tok = $r->input('token')))
-            return new Response(NULL, 400);
+            return new Response('no tok', 400);
+
+        if (!($src = $r->input('source')))
+            return new Response('no src', 400);
 
         try
         {
             $token = new BookingToken;
             $token->token = $tok;
             $token->disposition = BookingToken::FRESH;
+            $token->source = BookingToken::classify($src);
+            $token->validateToken();
             $token->save();
         }
         catch (\Illuminate\Database\QueryException $e)
         {
             // Integrity violation -> dupe token?
-            if ($e->getCode(23000))
-                return new Reponse(NULL, 410);
+            if ($e->getCode() == 23000)
+                return new Response(NULL, 410);
 
             throw $e;
         }
+        catch (\Demeter\BookingTokenException $e)
+        {
+            return new Response('Bad token', 400);
+        }
 
-        $invalid = FALSE;
+        $comp     = $src == BookingToken::TYPE_COMP;
+        $doStripe = $src == BookingToken::TYPE_STRIPE;
+        $invalid  = FALSE;
 
         DB::beginTransaction();
         $seatSet = app(SeatsetController::class)->getSS(FALSE);
@@ -44,7 +55,7 @@ class BookingController extends Controller
             $token->disposition = BookingToken::NO_SS;
             $token->save();
             DB::commit();
-            return new Response(NULL, 400);
+            return new Response('No SS', 400);
         }
 
         try
@@ -64,7 +75,7 @@ class BookingController extends Controller
             $token->disposition = BookingToken::SS_INVALID;
             $token->save();
             DB::commit();
-            return new Response(NULL, 409);
+            return new Response('SS Invalid', 409);
         }
 
         try
@@ -86,14 +97,14 @@ class BookingController extends Controller
             $booking->customer()->associate($cust);
             $booking->seatSet()->associate($seatSet);
 
-            $totals = $this->determineCurrentTotals($seatSet);
+            $totals = $this->determineCurrentTotals($seatSet, $comp);
             $booking->net = $totals['net'];
             $booking->gross = $totals['gross'];
             $booking->fees = $totals['fee'];
             $booking->save();
 
             $seatSet->ephemeral = FALSE;
-            $seatSet->freezePrices();
+            $seatSet->freezePrices($comp);
             $seatSet->save();
 
             $token->disposition = BookingToken::READY;
@@ -108,12 +119,12 @@ class BookingController extends Controller
             $token->disposition = BookingToken::BOOK_FAIL;
             $token->save();
             error_log($e);
-            return new Response(NULL, 400);
+            return new Response('sql bounce', 400);
         }
 
         $bookData = ['booking' => $booking->id];
 
-        if ($this->takePayment($booking, $token, $declined, $e))
+        if (!$doStripe || $this->takePayment($booking, $token, $declined, $e))
         {
             DB::transaction(function() use ($booking, $token)
             {
@@ -183,8 +194,11 @@ class BookingController extends Controller
         \Stripe\Stripe::setApiKey($_ENV['STRIPE_SKEY']);
     }
 
-    protected function determineCurrentTotals($seatSet)
+    protected function determineCurrentTotals($seatSet, $comp)
     {
+        if ($comp)
+            return ['net' => 0, 'fee' => 0, 'gross' => 0];
+
         $net = $this->determineCurrentNet($seatSet);
         $fee = $this->determineFee($net);
         $gross = $net + $fee;

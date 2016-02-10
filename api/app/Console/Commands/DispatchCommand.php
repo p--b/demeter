@@ -98,6 +98,8 @@ EOF;
     {
         $tixPages = [];
         $tixData  = [];
+        $method   = $this->getMethodString($booking);
+
         $numFmt = function($pence)
         {
             return '£ '.number_format($pence / 100, 2);
@@ -154,7 +156,7 @@ EOF;
                 <span class="seat">{$seatRef['row']}{$seatRef['num']}</span>
             </div>
             <p class="rate">Admit one <span class="rateName"> $rate </span></p>
-            <p class="price">$price</p>
+            <p class="price"><span class="method">$method</span> $price</p>
             <p class="customer">$booking->name #$booking->id :: Ticket {$seatNum} / $numSeats
              :: generated at $datetime</p>
             <barcode type="code128" code="$barcode" with-checksum="1" bar-thin-width="3" bar-thick-width="9" />
@@ -190,6 +192,7 @@ EOF;
         <p><strong>This VAT receipt is not a ticket.</strong></p>
         <p><span class="def">Sold by:</span> Imperial College Union, Prince Consort Road, London, SW7 2BB.
             VAT registration #: GB 240 5617 84</p>
+        <p><span class="def">Paid by:</span> $method</p>
         <table class="info">
             <tr><td>Invoice to:</td><td><strong>$booking->name</strong><br />$custAddr</td></tr>
             <tr><td>Booking reference / Invoice #:</td><td>$booking->id</td></tr>
@@ -257,6 +260,8 @@ EOF;
     </p>
     <p class="price" font-size="15pt" padding-right="10px"
         top="60mm" width="100%" text-align="right">
+        <span class="method" font-size="8pt">
+        </span>
     </p>
     <td padding="5px"></td>
     <td class="wide" width="200%"></td>
@@ -314,5 +319,10 @@ EOF;
                                 bcpow(16, $hexLen - $i)));
 
         return $return;
+    }
+
+    protected function getMethodString($booking)
+    {
+        return $booking->token()->first()->describeSource();
     }
 }

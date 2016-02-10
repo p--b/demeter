@@ -37,14 +37,16 @@ class BookingSeat extends Model
                            ->first()->price;
     }
 
-    public function freezePrice($seatSet = NULL)
+    public function freezePrice($seatSet = NULL, $comp = FALSE)
     {
         if ($seatSet == NULL)
             $seatSet = $this->seatSet()->first();
 
+        $price = $comp ? 0 : $this->getPrice();
+
         DB::table('booking_seats')
                 ->where('seat_set_id', $seatSet->id)
                 ->where('seat_id', $this->seat_id)
-                ->update(['pricePaid' => $this->getPrice()]);
+                ->update(['pricePaid' => $price]);
     }
 }

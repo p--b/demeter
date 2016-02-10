@@ -127,7 +127,8 @@ class CreateInitialTables extends Migration
             $tbl->increments('id');
             $tbl->string('token');
             $tbl->string('disposition');
-            $tbl->unique('token');
+            $tbl->string('source');
+            $tbl->unique(['token', 'source']);
         });
 
         Schema::create('bookings', function(Blueprint $tbl) {
