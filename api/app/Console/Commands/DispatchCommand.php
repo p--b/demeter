@@ -157,7 +157,7 @@ EOF;
             <p class="price">$price</p>
             <p class="customer">$booking->name #$booking->id :: Ticket {$seatNum} / $numSeats
              :: generated at $datetime</p>
-            <barcode type="code128" code="$barcode" with-checksum="1" />
+            <barcode type="code128" code="$barcode" with-checksum="1" bar-thin-width="3" bar-thick-width="9" />
     </div>
 </page>
 EOF;
@@ -275,19 +275,15 @@ EOF;
 
     protected function calcBarcode($booking, $seat, $seatRef, $perf, $show)
     {
-        $data = implode('|', [
-            0,
+        $data = implode('/', [
             $booking->id,
-            $show->id,
             $perf->id,
             $seat->seat_id,
-            $seatRef['block'],
-            $seatRef['row'],
-            $seatRef['num']]);
+           ]);
         $hash      = hash_hmac($_ENV['TIX_HMAC_ALGO'], $data, $_ENV['TIX_HMAC_KEY']);
-        $not       = "<>&\"'";
-        $targetSet = preg_replace("/[$not]/", "", implode(range('!', '~')));
-        return "$data@".$this->rebase($this->bchexdec($hash), $targetSet);
+        $targetSet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        $rebased   = $this->rebase($this->bchexdec($hash), $targetSet);
+        return "$data%".substr($rebased, 0, 15);
     }
 
     protected function rebase($decimal, $targetSet)
