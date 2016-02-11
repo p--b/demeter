@@ -279,6 +279,9 @@ var SeatPicker = React.createClass({
                     </div>
                     <h3>Viewing {this.props.perf.startsAt.toLocaleDateString()}
                         &nbsp;@&nbsp;{appCommon.formatTime(this.props.perf.startsAt)}
+                        <small>
+                            &nbsp;<a href={"#/shows/" + this.props.show.id}>(Choose another performance)</a>
+                        </small>
                     </h3>
                     <p>{this.props.show.get('description')}</p>
                     <p>{this.props.perf.description}</p>
