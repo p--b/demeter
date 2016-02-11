@@ -194,7 +194,7 @@ class BookingController extends Controller
         \Stripe\Stripe::setApiKey($_ENV['STRIPE_SKEY']);
     }
 
-    protected function determineCurrentTotals($seatSet, $comp)
+    protected function determineCurrentTotals($seatSet, $comp = FALSE)
     {
         if ($comp)
             return ['net' => 0, 'fee' => 0, 'gross' => 0];
