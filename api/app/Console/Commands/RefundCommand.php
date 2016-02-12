@@ -15,7 +15,6 @@ class RefundCommand extends Command {
 
     public function fire()
     {
-        DB::connection()->enableQueryLog();
         DB::transaction(function() {
             $booking = Booking::findOrFail($this->argument('bookingId'));
             $refunds = $booking->refunds()->lists('id');
@@ -47,6 +46,5 @@ class RefundCommand extends Command {
             $refund->gross = $booking->gross;
             $refund->save();
         });
-        print_r(DB::getQueryLog());
     }
 }
