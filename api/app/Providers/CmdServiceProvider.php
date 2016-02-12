@@ -18,7 +18,13 @@ class CmdServiceProvider extends ServiceProvider
             return new \Demeter\Console\Commands\DispatchCommand;
         });
 
+        $this->app->singleton('command.demeter.refund', function()
+        {
+            return new \Demeter\Console\Commands\RefundCommand;
+        });
+
         $this->commands('command.demeter.invalidate');
         $this->commands('command.demeter.dispatch');
+        $this->commands('command.demeter.refund');
     }
 }

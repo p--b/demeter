@@ -18,4 +18,9 @@ class Booking extends Model
     {
         return $this->belongsTo('Demeter\BookingToken');
     }
+
+    public function refunds()
+    {
+        return $this->hasMany('Demeter\Refund');
+    }
 }

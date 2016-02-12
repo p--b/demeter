@@ -13,7 +13,8 @@
         "zendframework/zend-barcode": ">=2.0.0,<2.4",
         "zendframework/zend-validator": ">=2.0.0,<2.4",
         "imagine/Imagine": ">=0.2.0,<0.6.0",
-        "psliwa/php-pdf": "^1.2"
+        "psliwa/php-pdf": "^1.2",
+        "doctrine/dbal": "^2.5"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
