@@ -1,0 +1,49 @@
+<?php
+
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Database\Migrations\Migration;
+
+class Stubs extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('api_keys', function ($tbl)
+        {
+            $tbl->increments('id');
+            $tbl->string('key');
+            $tbl->string('role');
+            $tbl->unique('key');
+        });
+
+        Schema::create('ticket_stubs', function($tbl)
+        {
+            $tbl->integer('seat_id')->unsigned();
+            $tbl->integer('performance_id')->unsigned();
+            $tbl->integer('booking_id')->unsigned();
+            $tbl->integer('api_key_id')->unsigned();
+            $tbl->boolean('initial')->default(TRUE)->nullable();
+            $tbl->timestamps();
+            $tbl->foreign('api_key_id')->references('id')->on('api_keys');
+            $tbl->foreign('booking_id')->references('id')->on('bookings');
+            $tbl->foreign(['seat_id', 'performance_id'])
+                ->references(['seat_id', 'performance_id'])->on('booking_seats');
+            $tbl->unique(['seat_id', 'performance_id', 'initial']);
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('ticket_stubs');
+        Schema::drop('api_keys');
+    }
+}

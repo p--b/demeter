@@ -29,3 +29,6 @@ $app->get('/availability/{performance}', 'AvailabilityController@get');
 
 $app->get('/booking/preview',    'BookingController@preview');
 $app->post('/booking/completion', 'BookingController@complete');
+
+$app->post('/stubs/{performance}/{seat}', ['uses' => 'StubController@take',
+                                           'middleware' => 'auth']);
