@@ -2,6 +2,7 @@ var React = require('react');
 var Backbone = require('backbone');
 var ReactDOM = require('react-dom');
 var appState = require('../appState.js');
+var appCommon = require('../appCommon.js');
 var _        = require('underscore');
 
 var Basket = require('../components/basket.js');
@@ -207,28 +208,7 @@ module.exports = {
 
         var handleError = function(e)
         {
-            console.log(e);
-            if ('statusCode' in e)
-            {
-                var classify = function(e)
-                {
-                    switch (e.status) {
-                        case 400: return "Your booking request appeared to be faulty.";
-                        case 402: return "We failed to take payment from your card. The card may be expired, invalid or declined. Please try again, or try another card.";
-                        case 409: return "Your seats have been invalidated as you took longer than 15 minutes to book. Please select new seats and try again.";
-                        case 500: return "Our booking system experienced an internal problem.";
-                        case 503: return "A conflict was detected when trying to secure your booking. Please close any other browser windows open on this site.";
-                        default: return  "Something went wrong which we can't identify, sorry.";
-                    }
-                };
-
-                appState.checkoutError = classify(e);
-            }
-            else
-            {
-                appState.checkoutError = "We're not sure what went wrong, sorry.";
-            }
-
+            appState.checkoutError = appCommon.classifyCompletionError(e);
             Backbone.history.navigate('confirm', {trigger: true});
         };
 

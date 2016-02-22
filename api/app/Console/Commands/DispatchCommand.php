@@ -40,12 +40,14 @@ class DispatchCommand extends Command {
         $this->info("Dispatched $n bookings.");
     }
 
-    protected function generateTickets($booking, $seatSet, $customer)
+    public function generateTickets($booking, $seatSet, $customer)
     {
         $facBuild = \PHPPdf\Core\FacadeBuilder::create(); // WHY CANNOT I JUST new?!?!
         $fac = $facBuild->build();
         $tixPdf = $fac->render($this->getTix($booking, $seatSet, $customer), $this->getTixSheet());
         file_put_contents(storage_path()."/app/tickets-$booking->id.pdf", $tixPdf);
+        $booking->ticketsGenerated = 1;
+        $booking->save();
 
         return $tixPdf;
     }
@@ -313,6 +315,12 @@ EOF;
         $hexLen = strlen($hex);
         $hexAlphabet = '0123456789abcdef';
 
+        /*
+         * FIXME: HILARIOUS BUG ALERT
+         * Of course, the end-range condition here is incorrect.
+         * It SHOULD be $i <= $hexLen. ERRONEOUS.
+         * We can't change this whilst we have live hashes, so....
+         */
         for ($i = 1; $i < $hexLen; $i++)
             $return = bcadd($return,
                             bcmul(strpos($hexAlphabet, $hex[$i - 1]),

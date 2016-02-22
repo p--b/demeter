@@ -29,7 +29,14 @@ class Authenticate
             if ($tokens[0] !== 'Demeter')
                 break;
 
-            $this->apiKey = ApiKey::where('key', $tokens[1])->firstOrFail();
+            try
+            {
+                $this->apiKey = ApiKey::where('key', $tokens[1])->firstOrFail();
+            }
+            catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e)
+            {
+                break;
+            }
 
             return $next($request);
         } while (FALSE);

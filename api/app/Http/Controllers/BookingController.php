@@ -55,7 +55,7 @@ class BookingController extends Controller
             $token->disposition = BookingToken::NO_SS;
             $token->save();
             DB::commit();
-            return new Response('No SS', 400);
+            return new Response('No SS', 404);
         }
 
         try
@@ -97,7 +97,7 @@ class BookingController extends Controller
             $booking->customer()->associate($cust);
             $booking->seatSet()->associate($seatSet);
 
-            $totals = $this->determineCurrentTotals($seatSet, $comp);
+            $totals = $this->determineCurrentTotals($seatSet, $comp, $doStripe);
             $booking->net = $totals['net'];
             $booking->gross = $totals['gross'];
             $booking->fees = $totals['fee'];
@@ -194,13 +194,15 @@ class BookingController extends Controller
         \Stripe\Stripe::setApiKey($_ENV['STRIPE_SKEY']);
     }
 
-    protected function determineCurrentTotals($seatSet, $comp = FALSE)
+    protected function determineCurrentTotals($seatSet,
+                                              $comp = FALSE,
+                                              $feeCharged = TRUE)
     {
         if ($comp)
             return ['net' => 0, 'fee' => 0, 'gross' => 0];
 
         $net = $this->determineCurrentNet($seatSet);
-        $fee = $this->determineFee($net);
+        $fee = $feeCharged ? $this->determineFee($net) : 0;
         $gross = $net + $fee;
 
         return ['net' => $net, 'fee' => $fee, 'gross' => $gross];
