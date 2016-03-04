@@ -23,6 +23,7 @@ class Stubs extends Migration
         Schema::create('ticket_stubs', function($tbl)
         {
             $tbl->integer('seat_id')->unsigned();
+            $tbl->integer('seat_set_id')->unsigned();
             $tbl->integer('performance_id')->unsigned();
             $tbl->integer('booking_id')->unsigned();
             $tbl->integer('api_key_id')->unsigned();
@@ -30,8 +31,8 @@ class Stubs extends Migration
             $tbl->timestamps();
             $tbl->foreign('api_key_id')->references('id')->on('api_keys');
             $tbl->foreign('booking_id')->references('id')->on('bookings');
-            $tbl->foreign(['seat_id', 'performance_id'])
-                ->references(['seat_id', 'performance_id'])->on('booking_seats');
+            $tbl->foreign(['seat_id', 'performance_id', 'seat_set_id'])
+                ->references(['seat_id', 'performance_id', 'seat_set_id'])->on('booking_seats');
             $tbl->unique(['seat_id', 'performance_id', 'initial']);
         });
     }
@@ -43,7 +44,7 @@ class Stubs extends Migration
      */
     public function down()
     {
-        Schema::drop('ticket_stubs');
-        Schema::drop('api_keys');
+        Schema::dropIfExists('ticket_stubs');
+        Schema::dropIfExists('api_keys');
     }
 }

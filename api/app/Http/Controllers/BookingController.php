@@ -34,7 +34,7 @@ class BookingController extends Controller
         {
             // Integrity violation -> dupe token?
             if ($e->getCode() == 23000)
-                return new Response(NULL, 410);
+                return new Response('duplicate token', 410);
 
             throw $e;
         }
@@ -67,7 +67,7 @@ class BookingController extends Controller
         catch (\Illuminate\Database\QueryException $e)
         {
             DB::commit();
-            return new Response(NULL, 503);
+            return new Response('no lock', 503);
         }
 
         if(!$seatSet->ephemeral || $seatSet->annulled)

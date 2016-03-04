@@ -67,6 +67,7 @@ class StubController extends Controller
         $stub = new TicketStub;
         $stub->performance_id = $performance;
         $stub->seat_id        = $seat;
+        $stub->seat_set_id    = $booking->seat_set_id;
         $stub->booking_id     = $booking;
         $stub->api_key_id     = $this->getAuth()->getId();
 
