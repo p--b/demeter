@@ -20,6 +20,11 @@ class Stubs extends Migration
             $tbl->unique('key');
         });
 
+        Schema::table('booking_seats', function($tbl)
+        {
+            $tbl->index(['seat_id', 'performance_id', 'seat_set_id']);
+        });
+
         Schema::create('ticket_stubs', function($tbl)
         {
             $tbl->integer('seat_id')->unsigned();
@@ -46,5 +51,10 @@ class Stubs extends Migration
     {
         Schema::dropIfExists('ticket_stubs');
         Schema::dropIfExists('api_keys');
+
+        Schema::table('booking_seats', function($tbl)
+        {
+            $tbl->dropIndex('booking_seats_seat_id_performance_id_seat_set_id_index');
+        });
     }
 }
